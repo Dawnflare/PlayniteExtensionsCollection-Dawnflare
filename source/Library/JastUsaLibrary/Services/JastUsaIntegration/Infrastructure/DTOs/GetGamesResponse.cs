@@ -38,8 +38,8 @@ namespace JastUsaLibrary.Services.JastUsaIntegration.Infrastructure.DTOs
         [JsonProperty("@type")]
         public ProductType Type { get; set; }
 
-        [JsonProperty("variants")]
-        public Variant[] Variants { get; set; }
+        [JsonProperty("game")]
+        public Game Game { get; set; }
 
         [JsonProperty("variant")]
         public Variant Variant { get; set; }

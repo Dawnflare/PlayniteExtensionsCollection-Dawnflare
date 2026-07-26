@@ -113,7 +113,7 @@ namespace JastUsaLibrary.JastUsaIntegration.Infrastructure.External
             return Serialization.FromJson<GameTranslationsResponse>(result.Content);
         }
 
-        public async Task<List<Variant>> GetProductsAsync(AuthenticationToken token, CancellationToken cancellationToken = default)
+        public async Task<List<Product>> GetProductsAsync(AuthenticationToken token, CancellationToken cancellationToken = default)
         {
             if (token is null || token.Token.IsNullOrWhiteSpace())
             {
@@ -126,7 +126,7 @@ namespace JastUsaLibrary.JastUsaIntegration.Infrastructure.External
                 ["Accept-Encoding"] = "utf-8"
             };
 
-            var products = new List<Variant>();
+            var products = new List<Product>();
             var page = 1;
             while (true)
             {
@@ -157,9 +157,9 @@ namespace JastUsaLibrary.JastUsaIntegration.Infrastructure.External
                 }
 
                 var response = Serialization.FromJson<GetGamesResponse>(result.Content);
-                var variants = response.Products?.Select(x => x.Variant).ToList();
-                products.AddRange(variants);
-                if (!variants.Any() || page == response.Pages)
+                var pageProducts = response.Products ?? new Product[0];
+                products.AddRange(pageProducts);
+                if (!pageProducts.Any() || page == response.Pages)
                 {
                     break;
                 }
